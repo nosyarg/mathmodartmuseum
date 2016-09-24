@@ -1,5 +1,21 @@
 to setup
   clear-all
+  reset-ticks
+  create-turtles brightness
+  ask turtles[gotocorner]
+end
+
+to gotocorner
+  ifelse random 100 > 50
+  [
+    set xcor 0
+    set ycor 0
+  ]
+  [
+    set xcor max-pxcor
+    set ycor max-pycor
+  ]
+  set heading random 360
 end
 
 to go
@@ -8,10 +24,22 @@ to go
 end
 
 to move
-
+  forward dist
+  if not can-move? dist
+  [
+    forward -1 * dist
+    set pcolor green
+    gotocorner
+  ]
+  if pcolor = white
+  [
+    forward -1 * dist
+    set pcolor green
+    gotocorner
+  ]
 end
 
-to draw-cells stolen from brians brain model
+to draw-cells ;;stolen from brian's brain model
   let erasing? white = [pcolor] of patch mouse-xcor mouse-ycor
   while [mouse-down?]
     [
@@ -30,10 +58,10 @@ to draw-cells stolen from brians brain model
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-316
-100
-625
-404
+374
+95
+683
+399
 -1
 -1
 13.0
@@ -43,8 +71,8 @@ GRAPHICS-WINDOW
 1
 1
 0
-1
-1
+0
+0
 1
 0
 22
@@ -57,10 +85,10 @@ ticks
 30.0
 
 BUTTON
-123
-225
-219
-258
+40
+165
+136
+198
 NIL
 draw-cells
 T
@@ -74,10 +102,10 @@ NIL
 1
 
 BUTTON
-128
-133
-194
-166
+42
+35
+108
+68
 NIL
 setup\n
 NIL
@@ -91,11 +119,11 @@ NIL
 1
 
 BUTTON
-79
-166
-142
-199
-NIL
+50
+104
+150
+137
+go-forever
 go
 T
 1
@@ -106,6 +134,53 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+92
+363
+264
+396
+brightness
+brightness
+0
+100
+50
+1
+1
+NIL
+HORIZONTAL
+
+BUTTON
+215
+158
+278
+191
+NIL
+go
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+SLIDER
+82
+296
+254
+329
+dist
+dist
+0
+1
+0.01
+.01
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
