@@ -1,3 +1,7 @@
+to setup
+  clear-all
+end
+
 to go
   ask turtles [move]
   tick
@@ -5,6 +9,24 @@ end
 
 to move
 
+end
+
+to draw-cells stolen from brians brain model
+  let erasing? white = [pcolor] of patch mouse-xcor mouse-ycor
+  while [mouse-down?]
+    [
+      ask patch mouse-xcor mouse-ycor
+      [
+        ifelse erasing?
+        [
+          set pcolor black
+        ]
+        [
+          set pcolor white
+        ]
+      ]
+    display
+    ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -33,6 +55,57 @@ GRAPHICS-WINDOW
 1
 ticks
 30.0
+
+BUTTON
+123
+225
+219
+258
+NIL
+draw-cells
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+128
+133
+194
+166
+NIL
+setup\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+79
+166
+142
+199
+NIL
+go
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
