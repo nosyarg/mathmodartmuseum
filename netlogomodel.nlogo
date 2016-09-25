@@ -20,14 +20,14 @@ end
 to gotocorner
   ifelse random 100 > 50
   [
-    set xcor 0
+    set xcor max-pxcor
     set ycor 0
-    set heading abs(60 * sin (360 * ticks / 50000)) +       (random 3000000) / 100000
+    set heading -1 * abs(60 * sin (360 * ticks / 50000)) -       (random 3000000) / 100000
   ]
   [
-    set xcor max-pxcor
+    set xcor 0
     set ycor max-pycor
-    set heading abs(60 * sin (360 * ticks / 50000)) + 180 + (random 3000000) / 100000
+    set heading -1 * abs(60 * sin (360 * ticks / 50000)) + 180 - (random 3000000) / 100000
   ]
   set height 4
   set vangle random 37
@@ -76,13 +76,13 @@ to draw-cells ;;stolen from brian's brain model
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-348
-18
-1219
-832
+345
+17
+1018
+651
 -1
 -1
-3.9
+3.0
 1
 10
 1
@@ -216,6 +216,17 @@ NIL
 NIL
 NIL
 1
+
+MONITOR
+91
+582
+163
+627
+area ratio
+(count patches with [pcolor = black])/(count patches with [pcolor = green])
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
