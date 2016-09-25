@@ -1,3 +1,4 @@
+turtles-own [height vangle]
 to setup
   clear-all
   reset-ticks
@@ -5,17 +6,31 @@ to setup
   ask turtles[gotocorner]
 end
 
+to clearlight
+  ask patches with [pcolor = green]
+  [
+    set pcolor black
+  ]
+  ask turtles
+  [
+    gotocorner
+  ]
+end
+
 to gotocorner
   ifelse random 100 > 50
   [
     set xcor 0
     set ycor 0
+    set heading abs(60 * sin (360 * ticks / 50000)) +       (random 3000000) / 100000
   ]
   [
     set xcor max-pxcor
     set ycor max-pycor
+    set heading abs(60 * sin (360 * ticks / 50000)) + 180 + (random 3000000) / 100000
   ]
-  set heading random 360
+  set height 4
+  set vangle random 37
 end
 
 to go
@@ -24,18 +39,21 @@ to go
 end
 
 to move
-  forward dist
-  if not can-move? dist
+  forward speed
+  set height height - speed * tan(vangle)
+  if not can-move? speed
   [
-    forward -1 * dist
-    set pcolor green
+    forward -1 * speed
     gotocorner
   ]
-  if pcolor = white
+  if pcolor = white and height < 3
   [
-    forward -1 * dist
-    set pcolor green
+    forward -1 * speed
     gotocorner
+  ]
+  if not (pcolor = white) and height < 2
+  [
+    set pcolor green
   ]
 end
 
@@ -58,13 +76,13 @@ to draw-cells ;;stolen from brian's brain model
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-374
-95
-683
-399
+348
+18
+1219
+832
 -1
 -1
-13.0
+3.9
 1
 10
 1
@@ -75,9 +93,9 @@ GRAPHICS-WINDOW
 0
 1
 0
-22
+220
 0
-20
+200
 0
 0
 1
@@ -144,7 +162,7 @@ brightness
 brightness
 0
 100
-50
+56
 1
 1
 NIL
@@ -172,15 +190,32 @@ SLIDER
 296
 254
 329
-dist
-dist
+speed
+speed
 0
 1
-0.01
+1
 .01
 1
 NIL
 HORIZONTAL
+
+BUTTON
+211
+74
+300
+107
+NIL
+clearlight\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
