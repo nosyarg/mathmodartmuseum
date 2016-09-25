@@ -1,4 +1,5 @@
-turtles-own [height vangle]
+turtles-own [height vangle onperim]
+globals [totalperim]
 to setup
   clear-all
   reset-ticks
@@ -22,12 +23,12 @@ to gotocorner
   [
     set xcor max-pxcor
     set ycor 0
-    set heading -1 * abs(60 * sin (360 * ticks / 50000)) -       (random 3000000) / 100000
+    set heading -1 * abs(60 * sin (360 * ticks / 5000)) -       (random 3000000) / 100000
   ]
   [
     set xcor 0
     set ycor max-pycor
-    set heading -1 * abs(60 * sin (360 * ticks / 50000)) + 180 - (random 3000000) / 100000
+    set heading -1 * abs(60 * sin (360 * ticks / 5000)) + 180 - (random 3000000) / 100000
   ]
   set height 4
   set vangle random 37
@@ -73,6 +74,17 @@ to draw-cells ;;stolen from brian's brain model
       ]
     display
     ]
+end
+
+to calcperim
+  set totalperim 0
+  ask patches with [(pcolor = black)]
+  [
+    if (count neighbors with [(not (pcolor = black))]) > 0
+    [
+      set totalperim totalperim + 1
+    ]
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -137,10 +149,10 @@ NIL
 1
 
 BUTTON
-50
-104
-150
-137
+129
+226
+229
+259
 go-forever
 go
 T
@@ -220,13 +232,30 @@ NIL
 MONITOR
 91
 582
-163
+168
 627
-area ratio
-(count patches with [pcolor = black])/(count patches with [pcolor = green])
+NIL
+totalperim
 17
 1
 11
+
+BUTTON
+196
+438
+288
+471
+NIL
+calcperim
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
