@@ -5,6 +5,21 @@ to setup
   reset-ticks
   create-turtles brightness
   ask turtles[gotocorner]
+  ask patches
+  [
+    if abs(pxcor - 170) < 2 and (50 < pycor) and (180 > pycor)
+    [
+      set pcolor white
+    ]
+    if abs(pycor - 50) < 2 and (20 < pxcor) and (170 > pxcor)
+    [
+      set pcolor white
+    ]
+    ;;if abs(pycor + 20 / 22 * pxcor - 200) < 2 and (50 < pxcor) and (150 > pxcor)
+    ;;[
+    ;;  set pcolor white
+    ;;]
+  ]
 end
 
 to clearlight
@@ -70,6 +85,24 @@ to draw-cells ;;stolen from brian's brain model
         ]
         [
           set pcolor white
+        ]
+      ]
+    display
+    ]
+end
+
+to greendraw ;;stolen from brian's brain model
+  let erasing? green = [pcolor] of patch mouse-xcor mouse-ycor
+  while [mouse-down?]
+    [
+      ask patch mouse-xcor mouse-ycor
+      [
+        ifelse erasing?
+        [
+          set pcolor black
+        ]
+        [
+          set pcolor green
         ]
       ]
     display
@@ -174,7 +207,7 @@ brightness
 brightness
 0
 100
-56
+100
 1
 1
 NIL
@@ -248,6 +281,23 @@ BUTTON
 NIL
 calcperim
 NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+56
+111
+153
+144
+NIL
+greendraw
+T
 1
 T
 OBSERVER
